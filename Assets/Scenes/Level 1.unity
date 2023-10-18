@@ -686,7 +686,12 @@ MonoBehaviour:
   direction: {x: 1, y: 0}
   segmentPrefab: {fileID: 8063026064104088088, guid: dd09132cfbf8f664fbeff92e1d22469a, type: 3}
   tail: {fileID: 7509290186618336708, guid: 47c2962158355c34ca4ad05e81d24038, type: 3}
-  initialSize: 3
+  segment_sprite: {fileID: 21300000, guid: 0203136516d61d148b8e18c0b3fc5040, type: 3}
+  Down_Right_Segment: {fileID: 21300000, guid: 0faf882d5494ba146b8db85321be8cf5, type: 3}
+  Up_Right_Segment: {fileID: 21300000, guid: aa618cceb3762a84dbc9ae8538e96f16, type: 3}
+  Down_Left_Segment: {fileID: 21300000, guid: 6b9e261a0137d1349a17d3dfbae85918, type: 3}
+  Up_Left_Segment: {fileID: 21300000, guid: 68bf02beb1153964e93155cd0fd2ea60, type: 3}
+  initialSize: 20
   score: 0
 --- !u!1 &1034280901
 GameObject:

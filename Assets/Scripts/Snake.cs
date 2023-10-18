@@ -8,6 +8,11 @@ public class Snake : MonoBehaviour
     public Vector2Int direction = Vector2Int.right;
     public Transform segmentPrefab;
     public Transform tail;
+    public Sprite segment_sprite;
+    public Sprite Down_Right_Segment;
+    public Sprite Up_Right_Segment;
+    public Sprite Down_Left_Segment;
+    public Sprite Up_Left_Segment;
     public int initialSize = 4;
     public int score = 0;
 
@@ -23,7 +28,7 @@ public class Snake : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        Debug.Log(score);
+        //Debug.Log(score);
         if(direction.x != 0f)
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -66,7 +71,7 @@ public class Snake : MonoBehaviour
 
         float cur_HEAD_position = transform.position.x;
         Debug.Log("Pozycja_X_Glowy: " + cur_HEAD_position);
-        //int changedir = 0;
+        //?
 
         for (int i = segments.Count - 1; i > 0; i--) 
         {
@@ -77,30 +82,111 @@ public class Snake : MonoBehaviour
 
             if (segments[i].position.x == cur_SEGMENT_X_position - 1.0f)
             {
-                //Debug.Log("sneak porusza sie w prawo");
-                segments[i].transform.localEulerAngles = new Vector3(0, 0, 0);
-                
+                if (segments[i].gameObject.GetComponent<SpriteRenderer>().sprite == Up_Right_Segment || segments[i].gameObject.GetComponent<SpriteRenderer>().sprite == Down_Right_Segment)
+                {
+                    segments[i].gameObject.GetComponent<SpriteRenderer>().sprite = segment_sprite; //przywraca "domyslna" grafikê dla segmêtu 
+                }
 
+                Vector3 EulerAngles_90 = new Vector3(0.0f, 0.0f, 90.0f);
+                Vector3 EulerAngles_Minus_90 = new Vector3(0.0f, 0.0f, 270.0f);
+
+                if ((segments[i].localEulerAngles == EulerAngles_90 || segments[i].localEulerAngles == EulerAngles_Minus_90) && i < 20)
+                {
+                    Debug.Log("zmiana, segment:" + i);
+
+                    if(segments[i].localEulerAngles == EulerAngles_90)
+                    {
+                        segments[i + 1].gameObject.GetComponent<SpriteRenderer>().sprite = Up_Right_Segment; //podmienia grafike na gore
+                    }
+                    else 
+                    {
+                        segments[i + 1].gameObject.GetComponent<SpriteRenderer>().sprite = Down_Right_Segment;
+                    }
+                }
+
+                Debug.Log("sneak porusza sie w prawo");
+                segments[i].transform.localEulerAngles = new Vector3(0, 0, 0);
+              
             }
             else if (segments[i].position.x == cur_SEGMENT_X_position + 1.0f)
             {
-                //Debug.Log("sneak porusza sie w lewo");
+                if (segments[i].gameObject.GetComponent<SpriteRenderer>().sprite == Down_Right_Segment || segments[i].gameObject.GetComponent<SpriteRenderer>().sprite == Up_Right_Segment)
+                {
+                    segments[i].gameObject.GetComponent<SpriteRenderer>().sprite = segment_sprite; //przywraca "domyslna" grafikê dla segmêtu 
+                }
+
+                Vector3 EulerAngles_90 = new Vector3(0.0f, 0.0f, 90.0f);
+                Vector3 EulerAngles_Minus_90 = new Vector3(0.0f, 0.0f, 270.0f);
+
+                if ((segments[i].localEulerAngles == EulerAngles_90 || segments[i].localEulerAngles == EulerAngles_Minus_90) && i < 20)
+                {
+                    Debug.Log("zmiana, segment:" + i);
+
+                    if(segments[i].localEulerAngles == EulerAngles_90)
+                    {
+                        segments[i + 1].gameObject.GetComponent<SpriteRenderer>().sprite = Down_Right_Segment; //podmienia grafike na gore
+                    }
+                    else
+                    {
+                        segments[i + 1].gameObject.GetComponent<SpriteRenderer>().sprite = Up_Right_Segment;
+                    }
+                }
+
+                Debug.Log("sneak porusza sie w lewo");
                 segments[i].transform.localEulerAngles = new Vector3(0, 0, 180);
             }
 
+
+
             if (segments[i].position.y == cur_SEGMENT_Y_position - 1.0f)
             {
-                if(segments[i].localEulerAngles == Vector3.zero)
+                if(segments[i].gameObject.GetComponent<SpriteRenderer>().sprite == Down_Right_Segment || segments[i].gameObject.GetComponent<SpriteRenderer>().sprite == Up_Right_Segment)
                 {
-                    //Debug.Log("zmiana, segment:" + i );
+                    segments[i].gameObject.GetComponent<SpriteRenderer>().sprite = segment_sprite; //przywraca "domyslna" grafikê dla segmêtu 
                 }
 
-                //Debug.Log("sneak porusza sie w gore");
+                Vector3 EulerAngles_180 = new Vector3(0.0f, 0.0f, 180.0f);
+
+                if ((segments[i].localEulerAngles == Vector3.zero || segments[i].localEulerAngles == EulerAngles_180) && i<20)
+                {
+                    Debug.Log("zmiana, segment:" + i);
+
+                    if(segments[i].localEulerAngles == Vector3.zero)
+                    {
+                        segments[i + 1].gameObject.GetComponent<SpriteRenderer>().sprite = Down_Right_Segment; //podmienia grafike na gore w prawo
+                    }
+                    else
+                    {
+                        segments[i + 1].gameObject.GetComponent<SpriteRenderer>().sprite = Up_Right_Segment; //podmienia grafike na gore w lewo
+                    }
+                }
+
+                Debug.Log("sneak porusza sie w gore");
                 segments[i].transform.localEulerAngles = new Vector3(0, 0, 90);  
             }
             else if (segments[i].position.y == cur_SEGMENT_Y_position + 1.0f)
             {
-                //Debug.Log("sneak porusza sie w dol");
+                if (segments[i].gameObject.GetComponent<SpriteRenderer>().sprite == Up_Right_Segment || segments[i].gameObject.GetComponent<SpriteRenderer>().sprite == Down_Right_Segment)
+                {
+                    segments[i].gameObject.GetComponent<SpriteRenderer>().sprite = segment_sprite; //przywraca "domyslna" grafikê dla segmêtu 
+                }
+
+                Vector3 EulerAngles_180 = new Vector3(0.0f, 0.0f, 180.0f);
+
+                if ((segments[i].localEulerAngles == Vector3.zero || segments[i].localEulerAngles == EulerAngles_180) && i < 20)
+                {
+                    Debug.Log("zmiana, segment:" + i);
+                    if(segments[i].localEulerAngles == Vector3.zero)
+                    {
+                        segments[i + 1].gameObject.GetComponent<SpriteRenderer>().sprite = Up_Right_Segment; //podmienia grafike na dol
+                    }
+                    else 
+                    {
+                        segments[i + 1].gameObject.GetComponent<SpriteRenderer>().sprite = Down_Right_Segment;
+                    }
+                }
+
+                Debug.Log("sneak porusza sie w dol");
                 segments[i].transform.localEulerAngles = new Vector3(0, 0, -90);
             }
 
@@ -131,10 +217,10 @@ public class Snake : MonoBehaviour
         segment.position = segments[segments.Count - 1].position; 
         segments.Add(segment);
 
-        addTail();
+        AddTail();
     }
 
-    private void addTail()
+    private void AddTail()
     {
         Transform segment = Instantiate(tail);
         segment.position = segments[segments.Count - 1].position;
@@ -160,7 +246,7 @@ public class Snake : MonoBehaviour
         {
             InitialGrow();
         }
-        addTail();
+        AddTail();
     }
     public bool Occupies(int x, int y)
     {
